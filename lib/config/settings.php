@@ -1,4 +1,13 @@
 <?php
+/**
+ * Configuration parameters
+ *
+ * @package Syrmetrika
+ * @author Serge Rodovnichenko <sergerod@gmail.com>
+ * @version 1.0.0
+ * @copyright (c) 2014, Serge Rodovnichenko
+ * @license http://www.webasyst.com/terms/#eula Webasyst
+ */
 
 return array(
     "counter_name" => array(
