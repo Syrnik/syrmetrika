@@ -1,0 +1,14 @@
+<script type="text/javascript">
+    console.log('{$target}');
+    if(typeof {$yacounter} === 'undefined'){ //Possible async loading
+        $(window).load(function(){ // wait for load
+            if(typeof {$yacounter} !== 'undefined'){
+                {$yacounter}.reachGoal('{$target}'{if !empty($yaparams)},{json_encode($yaparams)}{/if});
+            }{if $debug}else{
+                console.log('{$yacounter} is not defined');
+            }{/if}
+        });
+    }else{
+        {$yacounter}.reachGoal('{$target}'{if !empty($yaparams)},{json_encode($yaparams)}{/if});
+    }
+</script>
