@@ -127,14 +127,15 @@ class shopSyrmetrikaPlugin extends shopPlugin
         );
 
         foreach($order["items"] as $item) {
-            $ya_item=array();
+            $ya_item=array(
+                "name" => $item["name"],
+                "price" => $this->getBasePrice($item["price"], $order["currency"]),
+                "quantity" => intval($item["quantity"])
+            );
 
             if($item["type"] === "product") {
                 $ya_item["id"]=$item["sku_id"];
             }
-            $ya_item["name"] = $item["name"];
-            $ya_item["price"] = $this->getBasePrice($item["price"], $order["currency"]);
-            $ya_item["quantity"] = intval($item["quantity"]);
 
             $yaparams["goods"][] = $ya_item;
         }
