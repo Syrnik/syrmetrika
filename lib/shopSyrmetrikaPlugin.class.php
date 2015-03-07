@@ -143,6 +143,12 @@ class shopSyrmetrikaPlugin extends shopPlugin
         return $yaparams;
     }
 
+    /**
+     * @param float $price
+     * @param string $currency
+     * @return float
+     * @throws waException
+     */
     private function getBasePrice($price, $currency)
     {
         return floatval(str_replace(",", ".", shop_currency($price, $currency, waSystem::getInstance('shop')->getConfig()->getCurrency(TRUE), FALSE)));
