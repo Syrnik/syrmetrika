@@ -33,12 +33,23 @@ class shopSyrmetrikaPlugin extends shopPlugin
         // Известные нам шаги, которые отрабатываем
         $steps = array('contactinfo', 'shipping', 'payment', 'confirmation', 'success');
 
+        // Текущее поселение
+        $settlement = wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url');
+
+        // Настройки для текущего поселения
+        $settings = $this->getSettlementSetting($settlement);
+
+        // Если нет настроек для этой витрины
+        if(!$settings || !isset($settings['counter_name'])) {
+            return "";
+        }
+
         if (!is_array($param) || !isset($param['step']) || !in_array($param['step'], $steps)) {
             return "";
         }
 
         // Нет названия счетчика
-        $yacounter = trim($this->getSettings('counter_name'));
+        $yacounter = trim($settings['counter_name']);
         if (!$yacounter) {
             return "";
         }
@@ -49,7 +60,7 @@ class shopSyrmetrikaPlugin extends shopPlugin
         }
 
         // Нет названия цели
-        $target = trim($this->getSettings("target_{$param['step']}"));
+        $target = trim($settings["target_{$param['step']}"]);
         if (!$target) {
             return "";
         }
@@ -75,9 +86,20 @@ class shopSyrmetrikaPlugin extends shopPlugin
      */
     public function frontendCart($param)
     {
-        $yacounter = $this->getSettings('counter_name');
+        // Текущее поселение
+        $settlement = wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url');
+
+        // Настройки для текущего поселения
+        $settings = $this->getSettlementSetting($settlement);
+
+        // Если нет настроек для этой витрины
+        if(!$settings || !isset($settings['counter_name'])) {
+            return "";
+        }
+
+        $yacounter = trim($settings['counter_name']);
         $yaparams = array();
-        $target = $this->getSettings("target_cart");
+        $target = trim($settings["target_cart"]);
         $debug = waSystem::getInstance('wa-system')->getConfig()->isDebug();
 
         if ($yacounter && $target) {
