@@ -1,14 +1,26 @@
 <?php
 /**
  * @package Syrmetrika
- * @author Serge Rodovnichenko <sergerod@gmail.com>
- * @version 1.0.0
- * @copyright (c) 2014, Serge Rodovnichenko
+ * @author Serge Rodovnichenko <serge@syrnik.com>
+ * @version 2.0.0
+ * @copyright (c) 2014,2015 Serge Rodovnichenko
  * @license http://www.webasyst.com/terms/#eula Webasyst
  */
 
 class shopSyrmetrikaPlugin extends shopPlugin
 {
+    /** @var waAppSettingsModel */
+    private $Settings;
+
+    /**
+     * @param array $info
+     */
+    public function __construct($info)
+    {
+        $this->Settings = new waAppSettingsModel();
+
+        parent::__construct($info);
+    }
 
     /**
      * Hook frontend_checkout
@@ -78,6 +90,43 @@ class shopSyrmetrikaPlugin extends shopPlugin
         }
 
         return "";
+    }
+
+    /**
+     * Возвращает настройки плагина для указанного поселения. Если указан параметр $name, то возвращает
+     * только параметр с этим названием
+     *
+     * @param string $settlement
+     * @param string $name
+     * @return string|array
+     */
+    public function getSettlementSetting($settlement, $name = NULL)
+    {
+        $settings = array(
+            'counter_name' => '',
+            'target_cart' => '',
+            'target_contactinfo' => '',
+            'target_shipping' => '',
+            'target_payment' => '',
+            'target_confirmation' => '',
+            'target_success' => ''
+        );
+
+        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(),'settings', json_encode(array())));
+
+        if(array_key_exists($settlement, $all_settings)) {
+            array_merge($settings, $all_settings[$settlement]);
+        }
+
+        if($name) {
+            if(array_key_exists($name, $settings)) {
+                return $settings['name'];
+            } else {
+                return '';
+            }
+        }
+
+        return $settings;
     }
 
     /**
