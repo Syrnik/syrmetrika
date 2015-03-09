@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Syrmetrika
  * @author Serge Rodovnichenko <serge@syrnik.com>
@@ -6,7 +7,6 @@
  * @copyright (c) 2014,2015 Serge Rodovnichenko
  * @license http://www.webasyst.com/terms/#eula Webasyst
  */
-
 class shopSyrmetrikaPlugin extends shopPlugin
 {
     /** @var waAppSettingsModel */
@@ -33,24 +33,24 @@ class shopSyrmetrikaPlugin extends shopPlugin
         // Известные нам шаги, которые отрабатываем
         $steps = array('contactinfo', 'shipping', 'payment', 'confirmation', 'success');
 
-        if(!is_array($param) || !isset($param['step']) || !in_array($param['step'], $steps)) {
+        if (!is_array($param) || !isset($param['step']) || !in_array($param['step'], $steps)) {
             return "";
         }
 
         // Нет названия счетчика
         $yacounter = trim($this->getSettings('counter_name'));
-        if(!$yacounter) {
+        if (!$yacounter) {
             return "";
         }
 
         // Это возврат после оплаты. Мы уже все отправили в Метрику
-        if(($param['step'] === 'success') && waRequest::get('order_id')) {
+        if (($param['step'] === 'success') && waRequest::get('order_id')) {
             return "";
         }
 
         // Нет названия цели
         $target = trim($this->getSettings("target_{$param['step']}"));
-        if(!$target) {
+        if (!$target) {
             return "";
         }
 
@@ -80,7 +80,7 @@ class shopSyrmetrikaPlugin extends shopPlugin
         $target = $this->getSettings("target_cart");
         $debug = waSystem::getInstance('wa-system')->getConfig()->isDebug();
 
-        if($yacounter && $target) {
+        if ($yacounter && $target) {
             $view = waSystem::getInstance()->getView();
             $template = $this->path . '/templates/hook.html';
 
@@ -103,23 +103,23 @@ class shopSyrmetrikaPlugin extends shopPlugin
     public function getSettlementSetting($settlement, $name = NULL)
     {
         $settings = array(
-            'counter_name' => '',
-            'target_cart' => '',
-            'target_contactinfo' => '',
-            'target_shipping' => '',
-            'target_payment' => '',
+            'counter_name'        => '',
+            'target_cart'         => '',
+            'target_contactinfo'  => '',
+            'target_shipping'     => '',
+            'target_payment'      => '',
             'target_confirmation' => '',
-            'target_success' => ''
+            'target_success'      => ''
         );
 
-        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(),'settings', json_encode(array())));
+        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())));
 
-        if(array_key_exists($settlement, $all_settings)) {
+        if (array_key_exists($settlement, $all_settings) && is_array($all_settings[$settlement])) {
             array_merge($settings, $all_settings[$settlement]);
         }
 
-        if($name) {
-            if(array_key_exists($name, $settings)) {
+        if ($name) {
+            if (array_key_exists($name, $settings)) {
                 return $settings['name'];
             } else {
                 return '';
@@ -130,6 +130,38 @@ class shopSyrmetrikaPlugin extends shopPlugin
     }
 
     /**
+     * @param string $settlement
+     * @param array $settings
+     * @return bool
+     */
+    public function saveSettlementSetting($settlement, $settings)
+    {
+        $default_settings = array(
+            'counter_name'        => '',
+            'target_cart'         => '',
+            'target_contactinfo'  => '',
+            'target_shipping'     => '',
+            'target_payment'      => '',
+            'target_confirmation' => '',
+            'target_success'      => ''
+        );
+
+        $current_settings = array();
+
+        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())));
+
+        if (array_key_exists($settlement, $all_settings) && is_array($all_settings[$settlement])) {
+            $current_settings = array_merge($default_settings, $all_settings[$settlement]);
+        } else {
+            $current_settings = $default_settings;
+        }
+
+        $all_settings[$settlement] = array_merge($current_settings, $settings);
+
+        return $this->Settings->set($this->getSettingsKey(), 'settings', json_encode($all_settings));
+    }
+
+    /**
      * Returns additional info about order for Yandex
      *
      * @return array Additional parameters for YaCounter
@@ -137,12 +169,12 @@ class shopSyrmetrikaPlugin extends shopPlugin
     private function checkoutSuccess()
     {
         // Еще разок проверим
-        if(waRequest::get('order_id')) {
+        if (waRequest::get('order_id')) {
             return array();
         }
 
         $order_id = waSystem::getInstance()->getStorage()->get('shop/order_id');
-        if(!$order_id) { // Что-то пошло не так. Должен он тут быть!
+        if (!$order_id) { // Что-то пошло не так. Должен он тут быть!
             return array();
         }
 
@@ -155,7 +187,7 @@ class shopSyrmetrikaPlugin extends shopPlugin
         $order_params_model = new shopOrderParamsModel();
         $order['params'] = $order_params_model->get($order_id);
         $order_items_model = new shopOrderItemsModel();
-        $order['items'] = $order_items_model->getByField('order_id', $order_id, true);
+        $order['items'] = $order_items_model->getByField('order_id', $order_id, TRUE);
         $order['id'] = shopHelper::encodeOrderId($order_id);
 
         return $this->getYaparams($order);
@@ -170,20 +202,20 @@ class shopSyrmetrikaPlugin extends shopPlugin
     private function getYaparams($order)
     {
         $yaparams = array(
-            "order_id" => $order['id'],
+            "order_id"    => $order['id'],
             "order_price" => $this->getBasePrice($order["total"], $order["currency"]),
-            "currency" => $order["currency"]
+            "currency"    => $order["currency"]
         );
 
-        foreach($order["items"] as $item) {
-            $ya_item=array(
-                "name" => $item["name"],
-                "price" => $this->getBasePrice($item["price"], $order["currency"]),
+        foreach ($order["items"] as $item) {
+            $ya_item = array(
+                "name"     => $item["name"],
+                "price"    => $this->getBasePrice($item["price"], $order["currency"]),
                 "quantity" => intval($item["quantity"])
             );
 
-            if($item["type"] === "product") {
-                $ya_item["id"]=$item["sku_id"];
+            if ($item["type"] === "product") {
+                $ya_item["id"] = $item["sku_id"];
             }
 
             $yaparams["goods"][] = $ya_item;
