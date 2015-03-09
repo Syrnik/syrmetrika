@@ -1,0 +1,98 @@
+<script src="{$wa_app_static_url}plugins/syrmetrika/js/syrmetrika.js" type="text/javascript"></script>
+<h1>Настройка плагина Параметры заказа для Яндекс.Метрики</h1>
+
+<div id="syrmetrikasettings">
+    {if $settlements}
+        <div class="fields">
+            <div class="field settlement">
+                <div class="name">
+                    {if count($settlements)>1}
+                        [`Choose storefront`]
+                    {else}
+                        [`Storefront`]
+                    {/if}
+                </div>
+                <div class="value">
+                    {if count($settlements)>1}
+                        <select name="settlement">
+                            {foreach $settlements as $s}
+                                <option value="{$s|escape}">{$s|escape}</option>{/foreach}
+                        </select>
+                    {else}
+                        {$s = array_shift($settlements)}
+                        <b>{$s|escape}</b>
+                        <input type="hidden" name="settlement" value="{$s|escape}">
+                    {/if}
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название счетчика</div>
+                <div class="value">
+                    <input type="text" name="counter_name">
+                    <br>
+                    <span class="hint">Название переменной счетчика Метрики. Обычно выглядит как <i>yaCounterXXXXX</i>,
+                            где XXXXX цифры. Оставьте это поле пустым, чтобы отключить плагин на выбранной витрине</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Корзина»</div>
+                <div class="value">
+                    <input type="text" name="target_cart">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы <b>«Корзина»</b>. Оставьте это поле пустым,
+                            если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Контактная Информация»</div>
+                <div class="value">
+                    <input type="text" name="target_contactinfo">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы оформления заказа с вводом <b>контактной
+                            информации</b>. Оставьте это поле пустым, если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Выбор доставки»</div>
+                <div class="value">
+                    <input type="text" name="target_shipping">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы оформления заказа с <b>выбором
+                            способа доставки</b>. Оставьте это поле пустым, если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Выбор оплаты»</div>
+                <div class="value">
+                    <input type="text" name="target_payment">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы оформления заказа с <b>выбором
+                            способа
+                            оплаты</b>. Оставьте это поле пустым, если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Подтверждение заказа»</div>
+                <div class="value">
+                    <input type="text" name="target_confirmation">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы оформления заказа с <b>подтверждением
+                            заказа</b>. Оставьте это поле пустым, если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">Название цели «Заказ оформлен»</div>
+                <div class="value">
+                    <input type="text" name="target_success">
+                    <br>
+                    <span class="hint">Настроенное название цели для посещения страницы <b>успешным окончанием
+                            оформления заказа</b>. На этом этапе в Метрику будут дополнительно передан список заказанных
+                            товаров и номер заказа. Оставьте это поле пустым, если не надо учитывать достижение этой цели</span>
+                </div>
+            </div>
+        </div>
+    {else}
+        <p><strong>[`No settlements for Shop-Script 5 found.`]</strong><br>
+            [`Set up storefront settlements in <a href="{$wa_backend_url}site/#/routing/">Site</a> app`]</p>
+    {/if}
+</div>
