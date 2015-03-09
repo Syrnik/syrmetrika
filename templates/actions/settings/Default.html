@@ -8,9 +8,9 @@
                 <div class="field settlement">
                     <div class="name">
                         {if count($settlements)>1}
-                            [`Choose storefront`]
+                            {_wp('Choose storefront')}
                         {else}
-                            [`Storefront`]
+                            {_wp('Storefront')}
                         {/if}
                     </div>
                     <div class="value">
@@ -19,6 +19,8 @@
                                 {foreach $settlements as $s}
                                     <option value="{$s|escape}">{$s|escape}</option>{/foreach}
                             </select>
+                            <i class="icon16 loading" style="display: none" id="syrmetrika-loading-settlement-data-icon"></i>
+                            <span id="syrmetrika-load-settlement-data-messages" class="error-message"></span>
                         {else}
                             {$s = array_shift($settlements)}
                             <b>{$s|escape}</b>
@@ -94,6 +96,8 @@
                 <div class="field">
                     <div class="value submit">
                         <button class="button green" type="submit">{_w('Save')}</button>
+                        <i class="icon16 loading" id="syrmetrika-save-settings-process-icon" style="display: none"></i>
+                        <span id="syrmetrika-save-settings-result" style="display: none"></span>
                     </div>
                 </div>
             </form>
