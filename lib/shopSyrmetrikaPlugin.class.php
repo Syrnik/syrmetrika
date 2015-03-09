@@ -112,10 +112,10 @@ class shopSyrmetrikaPlugin extends shopPlugin
             'target_success'      => ''
         );
 
-        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())));
+        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())), TRUE);
 
         if (array_key_exists($settlement, $all_settings) && is_array($all_settings[$settlement])) {
-            array_merge($settings, $all_settings[$settlement]);
+            $settings = array_merge($settings, $all_settings[$settlement]);
         }
 
         if ($name) {
@@ -148,7 +148,7 @@ class shopSyrmetrikaPlugin extends shopPlugin
 
         $current_settings = array();
 
-        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())));
+        $all_settings = json_decode($this->Settings->get($this->getSettingsKey(), 'settings', json_encode(array())), TRUE);
 
         if (array_key_exists($settlement, $all_settings) && is_array($all_settings[$settlement])) {
             $current_settings = array_merge($default_settings, $all_settings[$settlement]);
