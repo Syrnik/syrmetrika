@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: shop/plugins/syrmetrika\n"
+"POT-Creation-Date: 2015-03-09 20:53+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Serge Rodovnichenko <sergerod@gmail.com>\n"
+"Language-Team: shop/plugins/syrmetrika\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n"
+"%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:12
+msgid "Choose storefront"
+msgstr "Выберите витрину"
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:15
+msgid "Storefront"
+msgstr "Витрина"
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:110
+msgid "No settlements for Shop-Script 5 found."
+msgstr "Для Shop-Script 5 не указано ни одного поселения"
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:110
+msgid ""
+"Set up storefront settlements in <a href=\"{$wa_backend_url}site/#/routing/"
+"\">Site</a> app"
+msgstr ""
+"Задайте поселение для Магазина в настройках приложения <a href="
+"\"{$wa_backend_url}site/#/routing/\">Сайт</a>"

@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: shop/plugins/syrmetrika\n"
+"POT-Creation-Date: 2015-03-09 20:53+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator:  shop/plugins/syrmetrika\n"
+"Language-Team:  shop/plugins/syrmetrika\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: en_US\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:12
+msgid "Choose storefront"
+msgstr ""
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:15
+msgid "Storefront"
+msgstr ""
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:110
+msgid "No settlements for Shop-Script 5 found."
+msgstr ""
+
+#: /wa-apps/shop/plugins/syrmetrika/templates/actions/settings/Default.html:110
+msgid "Set up storefront settlements in <a href=\"{$wa_backend_url}site/#/routing/\">Site</a> app"
+msgstr ""
