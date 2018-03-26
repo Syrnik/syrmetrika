@@ -224,9 +224,14 @@ class shopSyrmetrikaPlugin extends shopPlugin
     private function getYaparams($order)
     {
         $yaparams = array(
-            "order_id"    => $order['id'],
-            "order_price" => $this->getBasePrice($order["total"], $order["currency"]),
-            "currency"    => $order["currency"]
+            'ecommerce' => array(
+                'purchase' => array(
+                    'actionField' => array(
+                        'id' => $order['id'],
+                        'revenue' => $this->getBasePrice($order["total"], $order["currency"])
+                    )
+                )
+            )
         );
 
         foreach ($order["items"] as $item) {
@@ -240,7 +245,7 @@ class shopSyrmetrikaPlugin extends shopPlugin
                 $ya_item["id"] = $item["sku_id"];
             }
 
-            $yaparams["goods"][] = $ya_item;
+            $yaparams['ecommerce']['purchase']['products'][] = $ya_item;
         }
 
         return $yaparams;

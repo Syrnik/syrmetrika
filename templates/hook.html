@@ -2,7 +2,7 @@
     if(typeof {$yacounter} === 'undefined'){ //Possible async loading
         $(window).load(function(){ // wait for load
             if(typeof {$yacounter} !== 'undefined'){
-                {$yacounter}.reachGoal('{$target}'{if !empty($yaparams)},{json_encode($yaparams)}{/if});
+                {$yacounter}.reachGoal('{$target}');
             }{if $debug}else{
                 console.log('{$yacounter} is not defined');
             }{/if}
@@ -10,4 +10,8 @@
     }else{
         {$yacounter}.reachGoal('{$target}'{if !empty($yaparams)},{json_encode($yaparams)}{/if});
     }
+    {if !empty($yaparams)}
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({$yaparams|json_encode});
+    {/if}
 </script>
